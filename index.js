@@ -208,6 +208,8 @@ async function run() {
     //get request for find single course data which is approved by admin:
     app.get('/course/details:id', async (req, res) => {
       const courseId = req?.params?.id;
+      console.log(courseId);
+
 
       const query = { _id: new ObjectId(courseId) };
       const result = await rawCoursesCollection.findOne(query);
@@ -220,6 +222,8 @@ async function run() {
     //add user cart item in mongo db:
     app.post('/addcart', verifyJWT, async (req, res) => {
       const data = await req?.body;
+      console.log(data);
+
 
       const result = await cartCollection.insertOne(data);
       res.send(result).status(200);
