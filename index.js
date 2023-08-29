@@ -2,7 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+
+// require JWT
 const jwt = require('jsonwebtoken');
+
 
 const app = express();
 
@@ -26,6 +29,7 @@ app.get('/', (req, res) => {
 });
 
 // jwt authenticate middleware function:
+// jwt-----------
 const verifyJWT = (req, res, next) => {
   const authorization = req?.headers?.authorization;
   // console.log(authorization);
@@ -68,6 +72,7 @@ async function run() {
     const cartCollection = client.db('summer_camp').collection('userCart');
     //
     // jwt authentication create access token:
+    // jwt-----------
     app.post('/jwt', async (req, res) => {
       const userEmail = await req?.body;
       const token = jwt.sign(
@@ -248,3 +253,12 @@ run().catch(console.dir);
 app.listen(port, () => {
   console.log(`server running at port: http://localhost:${port}`);
 });
+
+
+
+
+
+
+
+
+// // ----------------------------------------------

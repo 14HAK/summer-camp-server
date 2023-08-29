@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 .env
+model
+controller
+router
+view
+server.js
 
 # Editor directories and files
 .vscode/*
