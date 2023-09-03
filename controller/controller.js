@@ -1,14 +1,25 @@
-
 const express = require('express');
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const { ObjectId } = require('mongodb');
 const { userCollection, rawCoursesCollection, cartCollection } = require('../model/model');
 
 express.json()
 
+const verifyUser = async (req, res) => {
+  const userEmail = await req?.body;
+  const token = jwt.sign(
+    userEmail,
+    process.env.ACCESS_TOKEN_CLIENT_SECRET,
+    { expiresIn: '2h' }
+  );
+  // console.log(process.env.ACCESS_TOKEN_CLIENT_SECRET);
+  // console.log(token)
+  res.send({ token });
+}
+
 const verifyJWT = (req, res, next) => {
   const authorization = req?.headers?.authorization;
-  // console.log(authorization);
-  // console.log('------------');
 
   if (!authorization) {
     return res
@@ -60,16 +71,6 @@ const getSingleCourse = async (req, res) => {
 const getInstructor = async (req, res) => {
   const result = await userCollection.find({}).toArray();
   res.send(result);
-}
-
-const verifyUser = async (req, res) => {
-  const userEmail = await req?.body;
-  const token = jwt.sign(
-    userEmail,
-    process.env.ACCESS_TOKEN_CLIENT_SECRET,
-    { expiresIn: '2h' }
-  );
-  res.send({ token });
 }
 
 const postUser = async (req, res) => {
@@ -141,7 +142,6 @@ const courseApproved = async (req, res) => {
 
 const addCart = async (req, res) => {
   const data = await req?.body;
-  console.log(data);
   const result = await cartCollection.insertOne(data);
   res.send(result).status(200);
 }
@@ -154,13 +154,13 @@ const getCart = async (req, res) => {
 
 
 module.exports = {
+  verifyUser,
   verifyJWT,
   getCourses,
   getSingleCourse,
   addCart,
   getCart,
   getInstructor,
-  verifyUser,
   postUser,
   getUser,
   postCourse,
