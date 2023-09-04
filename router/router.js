@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { verifyUser, postUser, verifyJWT, getUser, postCourse, getCourse, verifyAdmin, manageUsers, manageCourses, courseApproved, getCourses, getCart, getInstructor, getSingleCourse, addCart } = require('../controller/controller');
+const { verifyUser, postUser, verifyJWT, getUser, postCourse, getCourse, verifyAdmin, manageUsers, manageCourses, courseApproved, getCourses, getCart, getInstructor, getSingleCourse, addCart, stripPayment, paymentHistory, deleteCart } = require('../controller/controller');
 
 const router = express.Router();
 
@@ -17,6 +17,9 @@ router.get('/course/details:id', getSingleCourse);
 router.post('/addcart', verifyJWT, addCart);
 router.get('/cart', verifyJWT, getCart);
 router.get('/instructors', getInstructor);
+router.post('/create-payment-intent', stripPayment);
+router.get('/payhistory', paymentHistory);
+
 
 
 

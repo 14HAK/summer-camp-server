@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const { ObjectId } = require('mongodb');
 const { userCollection, rawCoursesCollection, cartCollection } = require('../model/model');
 
+const stripe = require("stripe")(process.env.STRIP_SK);
+
 express.json()
 
 const verifyUser = async (req, res) => {
@@ -152,6 +154,26 @@ const getCart = async (req, res) => {
   res.send(result).status(200);
 }
 
+const stripPayment = async (req, res) => {
+  const { totalPrice } = req.body;
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: totalPrice * 100,
+    currency: "usd",
+    automatic_payment_methods: {
+      enabled: true,
+    },
+  });
+  res.send({
+    clientSecret: paymentIntent.client_secret,
+  });
+}
+
+const paymentHistory = async (req, res) => {
+  res.send({ "paymentHistory": "success" })
+}
+
+
+
 
 module.exports = {
   verifyUser,
@@ -168,6 +190,8 @@ module.exports = {
   verifyAdmin,
   manageUsers,
   manageCourses,
-  courseApproved
+  courseApproved,
+  stripPayment,
+  paymentHistory,
 
-}
+};
