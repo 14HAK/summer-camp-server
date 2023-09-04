@@ -1,6 +1,9 @@
 const express = require('express');
 
-const { verifyUser, postUser, verifyJWT, getUser, postCourse, getCourse, verifyAdmin, manageUsers, manageCourses, courseApproved, getCourses, getCart, getInstructor, getSingleCourse, addCart, stripPayment, paymentHistory, deleteCart } = require('../controller/controller');
+const { manageCourses, courseApproved, getCart, getInstructor, addCart, } = require('../controller/controller');
+const { verifyUser, verifyJWT, verifyAdmin, stripPayment, paymentHistory, } = require('../controller/verify');
+
+const { postUser, getUser, getCourses, getSingleCourse, postCourse, getCourse, manageUsers } = require('../controller/userController');
 
 const router = express.Router();
 
