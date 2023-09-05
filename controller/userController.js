@@ -1,10 +1,8 @@
 const express = require('express');
 require('dotenv').config();
-const jwt = require('jsonwebtoken');
 const { ObjectId } = require('mongodb');
 const { userCollection, rawCoursesCollection, cartCollection } = require('../model/model');
 
-const stripe = require("stripe")(process.env.STRIP_SK);
 
 express.json()
 

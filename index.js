@@ -32,17 +32,14 @@ app.get('/', (req, res) => {
 async function run() {
   try {
     await client.connect();
-
-    // await client.db('admin').command({ ping: 1 });
-    console.log('mongoDB connected!');
-
     app.use('/', router);
-
+  } catch (error) {
+    console.log(error.message);
   } finally {
     await client.close();
   }
 }
-run().catch(console.dir);
+run()
 
 app.listen(port, () => {
   console.log(`server running at port: http://localhost:${port}`);
