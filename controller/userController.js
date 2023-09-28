@@ -66,7 +66,14 @@ const getSingleCourse = async (req, res) => {
   res.send(result).status(200);
 }
 
+const deleteItem = async (req, res) => {
+  const id = await req?.params?.id;
+  const query = { _id: new ObjectId(id) };
+  const result = await cartCollection.deleteOne(query)
+  // console.log(email, id);
+  res.send(result);
 
+}
 
 
 module.exports = {
@@ -77,4 +84,5 @@ module.exports = {
   getCourse,
   getCourses,
   getSingleCourse,
+  deleteItem,
 }
