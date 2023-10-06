@@ -31,6 +31,7 @@ app.get('/', (req, res) => {
 
 async function run() {
   try {
+    //
     await client.connect();
     app.use('/', router);
   } catch (error) {
